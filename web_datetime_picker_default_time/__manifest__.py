@@ -16,5 +16,8 @@
         "web.assets_backend": [
             "/web_datetime_picker_default_time/static/src/js/*.js",
         ],
+        "web.assets_unit_tests": [
+            "web_datetime_picker_default_time/static/tests/web_datetime_picker_default_time.test.js",
+        ],
     },
 }
