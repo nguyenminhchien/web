@@ -19,7 +19,7 @@ class ProductPricelistItem extends models.Model {
     date_end = fields.Datetime();
     datetime_field = fields.Datetime({string: "Datetime Field"});
 
-    _records = [{id: 1, default_date: "{'hour': 8, 'minute': 30, 'second': 15}"}];
+    _records = [{id: 1, default_date: '{"hour": 8, "minute": 30, "second": 15}'}];
 }
 
 defineModels([ProductPricelistItem]);
@@ -127,8 +127,11 @@ test("Default time is applied correctly for list.daterange field", async () => {
 
     // Test defaultEndTime
     await contains(".o_add_end_date").click();
-    await contains(".o_date_picker:nth-of-type(2) .o_datetime_button:last").click();
-    await waitFor("input[data-field='date_end']", {timeout: 1000});
+    await contains(".o_date_picker .o_datetime_button:first").click();
+    await contains(".o_date_picker .o_datetime_button:last").click();
+    await contains(".o_date_picker .o_datetime_button:last").click();
+    await contains("button.o_apply").click();
+    await waitFor("input[data-field='date_end']", {timeout: 1500});
 
     const dateEndFieldElement = queryOne("input[data-field='date_end']");
     const dateEnd = new Date(dateEndFieldElement.value);

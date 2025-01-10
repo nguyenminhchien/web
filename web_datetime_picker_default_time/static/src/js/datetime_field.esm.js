@@ -28,6 +28,12 @@ patch(DateTimeField.prototype, {
     // Getter
     get defaultTime() {
         if (typeof this.props.defaultTime === "string") {
+            if (!this.props.record.data[this.props.defaultTime]) {
+                return "";
+            }
+            if (typeof this.props.record.data[this.props.defaultTime] === "string") {
+                return JSON.parse(this.props.record.data[this.props.defaultTime]);
+            }
             return this.props.record.data[this.props.defaultTime];
         }
         return this.props.defaultTime;

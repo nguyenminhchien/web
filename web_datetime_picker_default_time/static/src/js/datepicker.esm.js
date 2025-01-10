@@ -54,12 +54,18 @@ patch(DateTimePicker.prototype, {
 DateTimePicker.props = {
     ...DateTimePicker.props,
     defaultTime: {
-        type: Object,
-        shape: {
-            hour: Number,
-            minute: Number,
-            second: Number,
-        },
+        type: [
+            String,
+            {
+                type: Object,
+                shape: {
+                    hour: Number,
+                    minute: Number,
+                    second: Number,
+                },
+                optional: true,
+            },
+        ],
         optional: true,
     },
     defaultStartTime: {
