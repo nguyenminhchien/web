@@ -11,7 +11,7 @@ import {
     listDateRangeField,
     listDateTimeField,
 } from "@web/views/fields/datetime/list_datetime_field";
-
+const {DateTime} = luxon;
 /**
  * @typedef {import("./datepicker.esm").DateTimePickerProps} DateTimePickerProps
  */
@@ -74,6 +74,32 @@ patch(DateTimeField.prototype, {
         this.state.range = true;
 
         this.openPicker(valueIndex);
+    },
+    getRecordValue() {
+        let values = super.getRecordValue(...arguments);
+        if (Array.isArray(values)) {
+            values = values.map((value) => {
+                return this.setTimeValue(value);
+            });
+        }
+        else {
+            values = this.setTimeValue(values);
+        }
+        return values;
+    },
+    setTimeValue(dateValue) {
+        const default_time = this.props.defaultTime;
+        if (!default_time || !dateValue || !DateTime.isDateTime(dateValue)) {
+            return dateValue;
+        }
+        if (dateValue.hour !== 0 || dateValue.minute !== 0 || dateValue.second !== 0) {
+            return dateValue;
+        }
+        return dateValue.set({
+            hour: default_time.hour,
+            minute: default_time.minute,
+            second: default_time.second,
+        });
     },
 });
 
