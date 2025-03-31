@@ -1,6 +1,6 @@
 /* Copyright 2024 Camptocamp
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl) */
-
+import {localization} from "@web/core/l10n/localization";
 import {patch} from "@web/core/utils/patch";
 import {
     DateTimeField,
@@ -23,6 +23,7 @@ patch(DateTimeField.prototype, {
         this.state.defaultTime = this.defaultTime;
         this.state.defaultStartTime = this.defaultStartTime;
         this.state.defaultEndTime = this.defaultEndTime;
+        this.userInputValue = "";
     },
 
     // Getter
@@ -101,6 +102,10 @@ patch(DateTimeField.prototype, {
             second: default_time.second,
         });
     },
+    onInput() {
+        super.onInput(...arguments);
+        this.userInputValue = arguments[0].target.value;
+    }
 });
 
 DateTimeField.props = {
